@@ -58,7 +58,7 @@ smappee.getServiceLocationInfo("0000", function(output) {
 })
 ```
 
-### getConsumptions(serviceLocationId,aggregation, from, to, callback)
+### getConsumptions(serviceLocationId, aggregation, from, to, callback)
 Get a list of all consumptions for the specified period and interval.
 The aggregation can be selected from one of the values of smappee.AGGREGATION_TYPES.
 See https://smappee.atlassian.net/wiki/display/DEVAPI/Get+Consumption
@@ -74,3 +74,37 @@ smappee.getConsumptions("0000", smappee.AGGREGATION_TYPES.MONTHLY, from, to, fun
     console.log(output);
 })
 ```
+
+### getSensorConsumptions(serviceLocationId, sensorId, aggregation, from, to, callback)
+Get a list of all sensor consumptions for the specified period and interval.
+The aggregation can be selected from one of the values of smappee.AGGREGATION_TYPES.
+See https://smappee.atlassian.net/wiki/display/DEVAPI/Get+Consumption
+
+```javascript
+var moment = require('moment');
+
+//This will get the consumptions for the last year til now.
+var from = moment().subtract(1, 'year').utc().valueOf();
+var to = moment().utc().valueOf();
+
+smappee.getSensorConsumptions("0000", 1, smappee.AGGREGATION_TYPES.MONTHLY, from, to, function(output) {
+    console.log(output);
+})
+```
+
+### getEvents(serviceLocationId, applianceIds, from, to, maxNumber, callback)
+Get a list of events for the specified period and interval and appliance IDs.
+
+```javascript
+var moment = require('moment');
+
+//This will get the consumptions for the last year til now.
+var from = moment().subtract(1, 'year').utc().valueOf();
+var to = moment().utc().valueOf();
+
+smappee.getEvents("0000", [5,6,7], from, to, 5, function(output) {
+    console.log(output);
+})
+```
+
+
