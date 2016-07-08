@@ -71,6 +71,28 @@ function SmappeeAPI(settings) {
         _get(url, fields, handler);
     };
 
+    /**
+     * Get a list of all sensor consumptions for the specified period and interval.
+     *
+     * see https://smappee.atlassian.net/wiki/display/DEVAPI/Get+Consumption
+     *
+     * @param serviceLocationId     serviceLocationId one of the ids from the getServiceLocations() request.
+     * @param sensorId              The id of a sensor installed on that location, cfr. the service location info call
+     * @param aggregation           one of the AGGREGATION TYPES to specify the periodically of the consumptions to return.
+     * @param from                  date in UTC milliseconds to start from
+     * @param to                    date in UTC milliseconds to end with
+     * @param handler               function that will be called when request is completed.
+     */
+    this.getSensorConsumptions = function(serviceLocationId, sensorId, aggregation, from, to, handler) {
+        var url = 'https://app1pub.smappee.net/dev/v1/servicelocation/' + serviceLocationId + '/sensor/' + sensorId + '/consumption';
+        var fields = {
+            aggregation: aggregation,
+            from: from,
+            to: to
+        };
+        _get(url, fields, handler);
+    };
+
     this.getLatestConsumption = function(serviceLocationId, handler) {
         var url = 'https://app1pub.smappee.net/dev/v1/servicelocation/' + serviceLocationId + '/consumption';
         var fields = {
