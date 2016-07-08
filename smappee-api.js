@@ -93,6 +93,30 @@ function SmappeeAPI(settings) {
         _get(url, fields, handler);
     };
 
+    /**
+     * Get a list of all consumptions for the specified period and interval.
+     *
+     * see https://smappee.atlassian.net/wiki/display/DEVAPI/Get+Consumption
+     *
+     * @param serviceLocationId     serviceLocationId one of the ids from the getServiceLocations() request.
+     * @param applianceIds          Array of appliance ids as described in the service location info, cfr Get Servicelocation Info
+     * @param from                  date in UTC milliseconds to start from
+     * @param to                    date in UTC milliseconds to end with
+     * @param maxNumber             The maximum number of events that should be returned by this query
+     * @param handler               function that will be called when request is completed.
+     */
+    this.getEvents = function(serviceLocationId, applianceIds, from, to, maxNumber, handler) {
+        var url = 'https://app1pub.smappee.net/dev/v1/servicelocation/' + serviceLocationId + '/events';
+        var fields = {
+            applienceId: applianceIds,
+            from: from,
+            to: to,
+            maxNumber: maxNumber || 10
+        };
+        _get(url, fields, handler);
+    };
+
+
     this.getLatestConsumption = function(serviceLocationId, handler) {
         var url = 'https://app1pub.smappee.net/dev/v1/servicelocation/' + serviceLocationId + '/consumption';
         var fields = {
@@ -115,17 +139,6 @@ function SmappeeAPI(settings) {
             aggregation: this.AGGREGATION_TYPES.MONTHLY,
             from: moment().subtract(1, 'year').utc().valueOf(),
             to: moment().utc().valueOf()
-        };
-        _get(url, fields, handler);
-    };
-
-    this.getEvents = function(serviceLocationId, applianceId, from, to, maxNumber, handler) {
-        var url = 'https://app1pub.smappee.net/dev/v1/servicelocation/' + serviceLocationId + '/events';
-        var fields = {
-            applienceId: applianceId,
-            from: from,
-            to: to,
-            maxNumber: maxNumber || 10
         };
         _get(url, fields, handler);
     };
